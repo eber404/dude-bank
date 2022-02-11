@@ -1,0 +1,18 @@
+{
+  "lint": {
+    "files": {
+      "include": [
+        "src/**/*.ts"
+      ]
+    },
+    "rules": {
+      "include": ["tslint.json"],
+      "exclude": ["*.ts"]
+    }
+  },
+  "fmt": {
+    "options": {
+      "singleQuote": true
+    }
+  }
+}

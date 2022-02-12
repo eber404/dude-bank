@@ -2,12 +2,12 @@
   "lint": {
     "files": {
       "include": [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "tests/**/*.ts"
       ]
     },
     "rules": {
-      "include": ["tslint.json"],
-      "exclude": ["*.ts"]
+      "exclude": ["no-explicit-any"]
     }
   },
   "fmt": {

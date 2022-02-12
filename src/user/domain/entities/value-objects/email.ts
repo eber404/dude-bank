@@ -1,3 +1,9 @@
+import {
+  Notification,
+  NotificationType,
+} from 'common/domain/singletons/notification.ts';
+import { ErrorMessages } from 'common/domain/validation/error-messages.ts';
+
 export class Email {
   public readonly _email!: string;
 
@@ -7,7 +13,10 @@ export class Email {
     if (isValid) {
       this._email = email;
     } else {
-      // notification
+      Notification.add({
+        message: ErrorMessages.INVALID_EMAIL,
+        type: NotificationType.ERROR,
+      });
     }
   }
 
@@ -16,7 +25,7 @@ export class Email {
   }
 
   private validate(email: string): boolean {
-    var tester =
+    const tester =
       /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
     if (!email) {
       return false;
@@ -27,11 +36,11 @@ export class Email {
     if (!tester.test(email)) {
       return false;
     }
-    var [account, address] = email.split('@');
+    const [account, address] = email.split('@');
     if (account.length > 64) {
       return false;
     }
-    var domainParts = address.split('.');
+    const domainParts = address.split('.');
     if (
       domainParts.some(function (part) {
         return part.length > 63;

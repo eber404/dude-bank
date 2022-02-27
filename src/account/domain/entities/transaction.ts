@@ -16,7 +16,7 @@ export interface TransactionProps {
 }
 
 export class Transaction {
-  public readonly id?: string;
+  public readonly id: string;
   public readonly amount: number;
   public readonly description?: string;
   public readonly from: Account;
@@ -25,7 +25,7 @@ export class Transaction {
   public readonly type: TransactionType;
 
   constructor(props: TransactionProps) {
-    this.id = props.id;
+    this.id = props.id ?? crypto.randomUUID();
     this.amount = new Amount(props.amount).amount;
     this.description = props.description;
     this.from = props.from;

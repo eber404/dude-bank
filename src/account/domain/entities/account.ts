@@ -3,27 +3,26 @@ import {
   NotificationType,
 } from 'common/domain/singletons/notification.ts';
 import { Amount } from 'account/domain/entities/value-objects/amount.ts';
-import { User } from 'user/domain/entities/user.ts';
 
 import { Transaction } from './transaction.ts';
-import { TransactionType } from './enums/transaction-type.ts';
+import { User } from '../../../user/domain/entities/user.ts';
 
 export interface AccountProps {
-  id: string;
-  user: User;
+  id?: string;
+  user: typeof User;
   balance: number;
   transactions?: Transaction[];
 }
 
 export class Account {
-  public readonly id?: string;
-  public readonly user: User;
+  public readonly id: string;
+  public readonly user!: typeof User;
   public readonly transactions: Transaction[];
 
   private _balance!: number;
 
   constructor(props: AccountProps) {
-    this.id = props.id;
+    this.id = props.id ?? crypto.randomUUID();
     this.user = props.user;
     this._balance = new Amount(props.balance).amount;
     this.transactions = props.transactions ?? [];

@@ -10,5 +10,9 @@ export interface GetAccountRepository {
 }
 
 export interface UpdateAccountRepository {
-  update(account: Account): Promise<void>;
+  update(id: string, account: Account): Promise<void>;
+}
+
+export interface CreateAccountRepository {
+  create(account: Account): Promise<void>;
 }

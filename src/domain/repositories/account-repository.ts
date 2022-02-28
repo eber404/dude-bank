@@ -1,8 +1,7 @@
-import { Transaction } from 'domain/entities/transaction.ts';
 import { Account } from 'domain/entities/account.ts';
 
-export interface CreateTransactionRepository {
-  create(input: Transaction): Promise<void>;
+export interface CreateAccountRepository {
+  create(account: Account): Promise<void>;
 }
 
 export interface GetAccountRepository {
@@ -11,8 +10,4 @@ export interface GetAccountRepository {
 
 export interface UpdateAccountRepository {
   update(id: string, account: Account): Promise<void>;
-}
-
-export interface CreateAccountRepository {
-  create(account: Account): Promise<void>;
 }

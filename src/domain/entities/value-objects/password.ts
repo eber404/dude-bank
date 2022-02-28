@@ -1,9 +1,8 @@
+import { ErrorMessages } from 'domain/validation/error-messages.ts';
 import {
   Notification,
   NotificationType,
 } from 'domain/singletons/notification.ts';
-
-import { ErrorMessages } from 'domain/validation/error-messages.ts';
 
 export class Password {
   private _password!: string;

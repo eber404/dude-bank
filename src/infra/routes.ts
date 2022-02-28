@@ -1,16 +1,19 @@
 import { NHttp } from 'nhttp/mod.ts';
 
+import { createUserController } from 'main/build-create-user.ts';
+
+import { LocalStorage } from 'infra/data/local-storage.ts';
+import { Collection } from 'infra/data/collection.ts';
+
 import { NHttpAdapter } from 'presentation/adapters/NHttpAdapter.ts';
 import { Output } from 'presentation/adapters/json-data-output.ts';
-import { listUsers } from 'infra/data/local-storage-users.ts';
-import { createUserController } from 'main/build-create-user.ts';
 
 const routes = new NHttp();
 
 routes.post('/api/users', NHttpAdapter.Post(createUserController));
 
 routes.get('/api/users', (rev) => {
-  const users = listUsers();
+  const users = LocalStorage.list(Collection.USERS);
 
   const output = new Output(users);
 

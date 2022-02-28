@@ -8,15 +8,27 @@ import {
   NotificationType,
 } from 'domain/singletons/notification.ts';
 import { Transaction } from 'domain/entities/transaction.ts';
+
 import { MakeTransactionDTO } from 'application/dtos/make-transaction-dto.ts';
-import { TransactionType } from '../../domain/entities/enums/transaction-type.ts';
+
+interface Dependencies {
+  createTransactionRepository: CreateTransactionRepository;
+  getAccountRepository: GetAccountRepository;
+  updateAccountRepository: UpdateAccountRepository;
+}
 
 export class TransferUseCase {
+  private readonly createTransactionRepository: CreateTransactionRepository;
+  private readonly getAccountRepository: GetAccountRepository;
+  private readonly updateAccountRepository: UpdateAccountRepository;
+
   constructor(
-    private readonly createTransactionRepository: CreateTransactionRepository,
-    private readonly getAccountRepository: GetAccountRepository,
-    private readonly updateAccountRepository: UpdateAccountRepository,
-  ) {}
+    dependencies: Dependencies,
+  ) {
+    this.createTransactionRepository = dependencies.createTransactionRepository;
+    this.getAccountRepository = dependencies.getAccountRepository;
+    this.updateAccountRepository = dependencies.updateAccountRepository;
+  }
 
   async execute(input: MakeTransactionDTO) {
     const senderAccount = await this.getAccountRepository.getById(
@@ -39,19 +51,17 @@ export class TransferUseCase {
     const senderTransaction = new Transaction({
       amount: input.amount,
       description: input.description,
-      from: senderAccount,
-      to: receiverAccount,
+      fromAccountId: senderAccount.id,
+      toAccountId: receiverAccount.id,
       date: new Date(),
-      type: TransactionType.DEBIT,
     });
 
     const receiverTransaction = new Transaction({
       amount: input.amount,
       description: input.description,
-      from: senderAccount,
-      to: receiverAccount,
+      fromAccountId: senderAccount.id,
+      toAccountId: receiverAccount.id,
       date: new Date(),
-      type: TransactionType.CREDIT,
     });
 
     if (!senderTransaction.isValid() || !receiverTransaction.isValid()) {

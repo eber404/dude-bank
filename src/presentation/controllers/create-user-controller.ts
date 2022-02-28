@@ -1,3 +1,5 @@
+import { CreateUserUseCase } from 'application/usecases/create-user-usecase.ts';
+
 import { HttpRequest } from 'presentation/http/http-request.ts';
 import {
   BadRequest,
@@ -8,10 +10,8 @@ import {
 import { Notification } from 'domain/singletons/notification.ts';
 import { Controller } from 'presentation/controllers/controller.ts';
 
-import { CreateUser } from 'domain/usecases/create-user.ts';
-
 export class CreateUserController implements Controller {
-  constructor(private readonly createUserUseCase: CreateUser) {}
+  constructor(private readonly createUserUseCase: CreateUserUseCase) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     try {

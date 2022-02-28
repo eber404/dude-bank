@@ -1,4 +1,5 @@
 import { CreateUserRepository } from 'domain/repositories/user-repository.ts';
+
 import { CreateUserDTO } from 'application/dtos/create-user-dto.ts';
 
 import { LocalStorage } from 'infra/data/local-storage.ts';

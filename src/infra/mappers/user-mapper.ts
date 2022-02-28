@@ -1,8 +1,8 @@
 import { User } from 'domain/entities/user.ts';
-import { Account } from 'domain/entities/account.ts';
 
 import { UserDTO } from 'infra/dtos/user-dto.ts';
-import { AccountDTO } from '../dtos/account-dto.ts';
+import { AccountDTO } from 'infra/dtos/account-dto.ts';
+
 import { AccountMapper } from './account-mapper.ts';
 
 function fromDomain(user: User): UserDTO {

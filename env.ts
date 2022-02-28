@@ -1,11 +1,9 @@
 import 'dotenv/load.ts';
 
-const ENCRYPTION_KEY = Deno.env.get('ENCRYPTION_KEY') as string;
-const NOMICS_API_KEY = Deno.env.get('NOMICS_API_KEY') as string;
+const ENV = Deno.env.get('ENV') as string;
 
 const envVars = {
-  ENCRYPTION_KEY,
-  NOMICS_API_KEY,
+  ENV,
 };
 
 function loadVars() {

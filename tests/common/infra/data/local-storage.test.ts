@@ -2,20 +2,21 @@ import { assert, assertEquals } from 'std/testing/asserts.ts';
 
 import { Collection } from 'infra/data/collection.ts';
 import { LocalStorage } from 'infra/data/local-storage.ts';
-import { UserDTO } from 'domain/entities/user-dto.ts';
+import { UserDTO } from 'infra/dtos/user-dto.ts';
+
+const user: UserDTO = {
+  id: crypto.randomUUID(),
+  name: 'John',
+  password: '12345678',
+  email: 'john@email.com',
+  accountId: crypto.randomUUID(),
+};
 
 Deno.test('testing local storage', async (p) => {
   await p.step('save item in local storage and retrieve it correctly', () => {
     // given
     const collection = Collection.USERS;
     LocalStorage.deleteAll(collection);
-
-    const user = {
-      id: crypto.randomUUID(),
-      name: 'John',
-      password: '12345678',
-      email: 'john@gmail.com',
-    };
 
     // when
     LocalStorage.add<UserDTO>(collection, user);
@@ -29,13 +30,6 @@ Deno.test('testing local storage', async (p) => {
   await p.step('delete all items from local storage', () => {
     // given
     const collection = Collection.USERS;
-
-    const user = {
-      id: crypto.randomUUID(),
-      name: 'John',
-      password: '12345678',
-      email: 'john@gmail.com',
-    };
 
     // when
     LocalStorage.add<UserDTO>(collection, user);
@@ -51,13 +45,6 @@ Deno.test('testing local storage', async (p) => {
     // given
     const collection = Collection.USERS;
     LocalStorage.deleteAll(collection);
-
-    const user = {
-      id: crypto.randomUUID(),
-      name: 'John',
-      password: '12345678',
-      email: 'john@gmail.com',
-    };
 
     // when
     LocalStorage.add<UserDTO>(collection, user);
@@ -77,13 +64,6 @@ Deno.test('testing local storage', async (p) => {
     const collection = Collection.USERS;
     LocalStorage.deleteAll(collection);
 
-    const user = {
-      id: crypto.randomUUID(),
-      name: 'John',
-      password: '12345678',
-      email: 'john@gmail.com',
-    };
-
     // when
     LocalStorage.add<UserDTO>(collection, user);
     LocalStorage.deleteBy<UserDTO>(
@@ -101,5 +81,27 @@ Deno.test('testing local storage', async (p) => {
     // then
     assert(users.length === 0);
     assertEquals(retriviedUser, null);
+  });
+
+  await p.step('should update user', async () => {
+    //given
+    const collection = Collection.USERS;
+    LocalStorage.deleteAll(collection);
+    const updatedUser = {
+      ...user,
+      name: 'John Doe',
+    };
+
+    // when
+    await LocalStorage.add<UserDTO>(collection, user);
+    await LocalStorage.update<UserDTO>(collection, user.id, updatedUser);
+    const retriviedUser = await LocalStorage.getBy<UserDTO>(
+      collection,
+      'id',
+      user.id,
+    );
+
+    // then
+    assertEquals(retriviedUser, updatedUser);
   });
 });

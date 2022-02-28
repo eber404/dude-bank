@@ -1,3 +1,4 @@
+import { ErrorMessages } from 'domain/validation/error-messages.ts';
 import {
   Notification,
   NotificationType,
@@ -14,7 +15,7 @@ export class Amount {
     } else {
       Notification.add({
         type: NotificationType.ERROR,
-        message: 'Amount cannot be negative',
+        message: ErrorMessages.INVALID_AMOUNT,
       });
     }
   }

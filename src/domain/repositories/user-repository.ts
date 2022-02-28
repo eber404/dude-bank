@@ -5,7 +5,7 @@ export interface CreateUserRepository {
 }
 
 export interface ListUsersRepository {
-  list(): Promise<User[]>;
+  list(): Promise<User[] | []>;
 }
 
 export interface GetUserByEmailRepository {

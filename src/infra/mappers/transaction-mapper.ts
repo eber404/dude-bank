@@ -1,4 +1,5 @@
 import { Transaction } from 'domain/entities/transaction.ts';
+
 import { TransactionDTO } from 'infra/dtos/transaction-dto.ts';
 
 function fromDomain(transaction: Transaction): TransactionDTO {

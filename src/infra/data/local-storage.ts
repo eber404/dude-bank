@@ -1,7 +1,5 @@
 import { Collection } from './collection.ts';
 
-type GenericType = { [key: string]: any };
-
 function add<T>(collection: Collection, value: T): void {
   const items = list<T>(collection);
 
@@ -25,9 +23,7 @@ function deleteAll(collection: Collection): void {
 function deleteBy<T>(collection: Collection, key: string, value: any): void {
   const items = list(collection) as T[];
 
-  const filteredItems = items.filter((item: GenericType) =>
-    item[key] !== value
-  );
+  const filteredItems = items.filter((item: any) => item[key] !== value);
 
   localStorage.setItem(collection, JSON.stringify(filteredItems));
 }
@@ -37,15 +33,28 @@ function getBy<T>(
   key: string,
   value: string,
 ): T | null {
-  const items = list<T>(collection) as GenericType[];
+  const items = list<T>(collection) as any[];
 
   for (const item of items) {
-    if (item[key].toLowerCase() === value.toLowerCase()) {
+    if (item[key]?.toLowerCase() === value?.toLowerCase()) {
       return item as T;
     }
   }
 
   return null;
+}
+
+function update<T>(collection: Collection, id: string, content: any): void {
+  const item = getBy<T>(collection, 'id', id);
+
+  if (!item) return;
+
+  const items = list(collection) as T[];
+  const filteredItems = items.filter((item: any) => item.id !== id);
+
+  const updatedItems = [...filteredItems, content];
+
+  localStorage.setItem(collection, JSON.stringify(updatedItems));
 }
 
 export const LocalStorage = {
@@ -54,4 +63,5 @@ export const LocalStorage = {
   deleteAll,
   getBy,
   deleteBy,
+  update,
 };

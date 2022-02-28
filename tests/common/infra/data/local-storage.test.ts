@@ -1,8 +1,8 @@
 import { assert, assertEquals } from 'std/testing/asserts.ts';
 
-import { Collection } from 'common/infra/data/collection.ts';
-import { LocalStorage } from 'common/infra/data/local-storage.ts';
-import { UserDTO } from 'user/domain/entities/user-dto.ts';
+import { Collection } from 'infra/data/collection.ts';
+import { LocalStorage } from 'infra/data/local-storage.ts';
+import { UserDTO } from 'domain/entities/user-dto.ts';
 
 Deno.test('testing local storage', async (p) => {
   await p.step('save item in local storage and retrieve it correctly', () => {

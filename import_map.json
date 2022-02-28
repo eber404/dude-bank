@@ -3,9 +3,12 @@
     "/": "./",
     "./": "./",
     "src/": "./src/",
-    "account/": "./src/account/",
-    "common/": "./src/common/",
-    "user/": "./src/user/",
+    "application/": "./src/application/",
+    "domain/": "./src/domain/",
+    "infra/": "./src/infra/",
+    "main/": "./src/main/",
+    "presentation/": "./src/presentation/",
+
     "tests/": "./tests/",
 
     "std/": "https://deno.land/std@0.126.0/",

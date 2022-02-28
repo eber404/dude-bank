@@ -4,27 +4,18 @@ import {
   CreateTransactionRepository,
   GetAccountRepository,
   UpdateAccountRepository,
-} from 'account/domain/repositories/account-repository.ts';
-import { TransferUseCase } from 'account/application/usecases/transfer-usecase.ts';
-import { Account } from 'account/domain/entities/account.ts';
-import { User } from 'user/domain/entities/user.ts';
-
-const userMock = new User({
-  email: 'fulano@gmail.com',
-  name: 'Fulano',
-  password: '12345678',
-});
+} from 'domain/repositories/account-repository.ts';
+import { TransferUseCase } from 'application/usecases/transfer-usecase.ts';
+import { Account } from 'domain/entities/account.ts';
 
 const senderAccountMock = new Account({
   balance: 1000,
-  user: userMock,
   id: crypto.randomUUID(),
   transactions: [],
 });
 
 const receiverAccountMock = new Account({
   balance: 1000,
-  user: userMock,
   id: crypto.randomUUID(),
   transactions: [],
 });

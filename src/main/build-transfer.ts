@@ -1,6 +1,10 @@
+import { TransferUseCase } from 'application/usecases/transfer-usecase.ts';
+
 import { TransferController } from 'presentation/controllers/transfer-controller.ts';
 
-import { TransferUseCase } from 'application/usecases/transfer-usecase.ts';
+import { CreateTransactionRepositoryLocal } from 'infra/repositories/create-transaction-repository-local.ts';
+import { GetAccountRepositoryLocal } from 'infra/repositories/get-account-repository-local.ts';
+import { UpdateAccountRepositoryLocal } from 'infra/repositories/update-account-repository-local.ts';
 
 function buildTransfer(): TransferController {
   const transferUseCase = new TransferUseCase({

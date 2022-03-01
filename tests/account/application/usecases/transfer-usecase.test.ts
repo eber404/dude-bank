@@ -37,11 +37,11 @@ const updateAccountRepository: UpdateAccountRepository = {
 };
 
 const makeSut = () =>
-  new TransferUseCase(
+  new TransferUseCase({
     createTransactionRepository,
     getAccountRepository,
     updateAccountRepository,
-  );
+  });
 
 Deno.test('make transaction use case', async (t) => {
   // given

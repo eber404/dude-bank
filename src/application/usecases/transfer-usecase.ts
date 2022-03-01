@@ -1,8 +1,8 @@
 import {
-  CreateTransactionRepository,
   GetAccountRepository,
   UpdateAccountRepository,
 } from 'domain/repositories/account-repository.ts';
+import { CreateTransactionRepository } from 'domain/repositories/transaction-repository.ts';
 import {
   Notification,
   NotificationType,

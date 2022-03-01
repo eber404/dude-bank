@@ -4,7 +4,7 @@ import { CreateUserController } from 'presentation/controllers/create-user-contr
 
 import { CreateUserRepositoryLocal } from 'infra/repositories/create-user-repository-local.ts';
 import { GetUserByEmailRepositoryLocal } from 'infra/repositories/get-user-by-email-repository-local.ts';
-import { CreateAccountRepositoryLocal } from '../infra/repositories/create-account-repository.ts';
+import { CreateAccountRepositoryLocal } from 'infra/repositories/create-account-repository-local.ts';
 
 function buildCreateUser(): CreateUserController {
   const createUserRepository = new CreateUserRepositoryLocal();

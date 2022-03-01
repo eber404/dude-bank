@@ -7,8 +7,8 @@ import { AccountMapper } from 'infra/mappers/account-mapper.ts';
 
 export class CreateAccountRepositoryLocal implements CreateAccountRepository {
   async create(account: Account): Promise<void> {
-    const accountDto = AccountMapper.fromDomain(account);
+    const accountDTO = AccountMapper.fromDomain(account);
 
-    await LocalStorage.add(Collection.ACCOUNTS, accountDto);
+    await LocalStorage.add(Collection.ACCOUNTS, accountDTO);
   }
 }

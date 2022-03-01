@@ -45,12 +45,9 @@ export class CreateUserUseCase {
       });
     }
 
-    await this.createUserRepository.create(user);
-
-    const account = new Account({
-      balance: 1000,
-    });
-
-    await this.createAccountRepository.create(account);
+    await Promise.all([
+      this.createUserRepository.create(user),
+      this.createAccountRepository.create(user.account),
+    ]);
   }
 }

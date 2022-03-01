@@ -10,18 +10,21 @@ export interface AccountProps {
   id?: string;
   balance: number;
   transactions?: Transaction[];
+  userId: string;
 }
 
 export class Account {
   public readonly id: string;
   public readonly transactions: Transaction[];
+  public readonly userId: string;
 
-  private _balance!: number;
+  private _balance: number;
 
   constructor(props: AccountProps) {
     this.id = props.id ?? crypto.randomUUID();
     this._balance = new Amount(props.balance).amount;
     this.transactions = props.transactions ?? [];
+    this.userId = props.userId;
   }
 
   get balance() {
@@ -29,7 +32,7 @@ export class Account {
   }
 
   public isValid() {
-    return this._balance >= 0;
+    return this._balance >= 0 && this.userId.length > 0;
   }
 
   public addTransaction(transaction: Transaction) {

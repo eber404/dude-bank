@@ -1,6 +1,7 @@
 import { NHttp } from 'nhttp/mod.ts';
 
 import { createUserController } from 'main/build-create-user.ts';
+import { transferController } from 'main/build-transfer.ts';
 
 import { LocalStorage } from 'infra/data/local-storage.ts';
 import { Collection } from 'infra/data/collection.ts';
@@ -23,5 +24,7 @@ routes.get('/api/users', (rev) => {
     rev.response.status(200).json(output);
   }
 });
+
+routes.post('/api/transaction', NHttpAdapter.Post(transferController));
 
 export { routes as app };

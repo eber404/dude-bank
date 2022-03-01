@@ -1,6 +1,7 @@
 import { Handler, RequestEvent } from 'nhttp/mod.ts';
 
-import { Controller } from 'presentation/controllers/controller.ts';
+import { Controller } from 'domain/controllers/controller.ts';
+
 import { HttpRequest } from 'presentation/http/http-request.ts';
 import { Output } from 'presentation/adapters/json-data-output.ts';
 

@@ -1,3 +1,6 @@
+import { Controller } from 'domain/controllers/controller.ts';
+import { Notification } from 'domain/singletons/notification.ts';
+
 import { CreateUserUseCase } from 'application/usecases/create-user-usecase.ts';
 
 import { HttpRequest } from 'presentation/http/http-request.ts';
@@ -7,8 +10,6 @@ import {
   HttpResponse,
   InternalServerError,
 } from 'presentation/http/http-response.ts';
-import { Notification } from 'domain/singletons/notification.ts';
-import { Controller } from 'presentation/controllers/controller.ts';
 
 export class CreateUserController implements Controller {
   constructor(private readonly createUserUseCase: CreateUserUseCase) {}

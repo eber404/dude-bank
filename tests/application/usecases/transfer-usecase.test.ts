@@ -8,20 +8,21 @@ import {
 import { CreateTransactionRepository } from 'domain/repositories/transaction-repository.ts';
 
 import { TransferUseCase } from 'application/usecases/transfer-usecase.ts';
+import { User } from '../../../src/domain/entities/user.ts';
 
-const senderAccountMock = new Account({
-  balance: 1000,
-  id: crypto.randomUUID(),
-  transactions: [],
+const senderMock = new User({
+  email: 'fulano@email.com',
+  name: 'fulano',
+  password: '12345678',
 });
 
-const receiverAccountMock = new Account({
-  balance: 1000,
-  id: crypto.randomUUID(),
-  transactions: [],
+const receiverMock = new User({
+  email: 'ciclano@email.com',
+  name: 'ciclano',
+  password: '12345678',
 });
 
-const accounts = [senderAccountMock, receiverAccountMock];
+const accounts = [senderMock.account, receiverMock.account];
 
 const createTransactionRepository: CreateTransactionRepository = {
   create: async () => await void 0,
@@ -48,38 +49,40 @@ Deno.test('make transaction use case', async (t) => {
   const transferUseCase = makeSut();
 
   // when
-  if (!senderAccountMock.id || !receiverAccountMock.id) {
+  if (!senderMock.account.id || !receiverMock.account.id) {
     throw new Error(
-      `Account id ${senderAccountMock.id ?? receiverAccountMock.id} not found`,
+      `Account id ${
+        senderMock.account.id ?? receiverMock.account.id
+      } not found`,
     );
   }
 
   await transferUseCase.execute({
     amount: 100,
     description: '',
-    fromAccountId: senderAccountMock.id,
-    toAccountId: receiverAccountMock.id,
+    from: senderMock.account.id,
+    to: receiverMock.account.id,
   });
 
   await t.step(
     'should withdraw 100 from sender account',
     () => {
       // then
-      assertEquals(senderAccountMock.balance, 900);
+      assertEquals(senderMock.account.balance, 900);
     },
   );
 
   await t.step('should deposit 100 to receiver account', () => {
     // then
-    assertEquals(receiverAccountMock.balance, 1100);
+    assertEquals(receiverMock.account.balance, 1100);
   });
 
   await t.step(
     'should add transaction to receiver and to sender accounts',
     () => {
       // then
-      assertEquals(senderAccountMock.transactions.length, 1);
-      assertEquals(receiverAccountMock.transactions.length, 1);
+      assertEquals(senderMock.account.transactions.length, 1);
+      assertEquals(receiverMock.account.transactions.length, 1);
     },
   );
 });

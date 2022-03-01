@@ -1,4 +1,8 @@
-import { Controller } from 'presentation/controllers/controller.ts';
+import { Controller } from 'domain/controllers/controller.ts';
+import { Notification } from 'domain/singletons/notification.ts';
+
+import { TransferUseCase } from 'application/usecases/transfer-usecase.ts';
+
 import {
   BadRequest,
   HttpResponse,
@@ -6,9 +10,6 @@ import {
   Ok,
 } from 'presentation/http/http-response.ts';
 import { HttpRequest } from 'presentation/http/http-request.ts';
-import { Notification } from 'domain/singletons/notification.ts';
-
-import { TransferUseCase } from 'application/usecases/transfer-usecase.ts';
 
 export class TransferController implements Controller {
   constructor(private readonly transferUseCase: TransferUseCase) {}
@@ -16,8 +17,10 @@ export class TransferController implements Controller {
   async handle(input: HttpRequest): Promise<HttpResponse> {
     try {
       const { body } = input;
-      if (!body.fromAccountId || !body.toAccountId || !body.amount) {
-        return BadRequest('inform fromAccountId, toAccountId and amount');
+      if (!body.from || !body.to || !body.amount) {
+        return BadRequest(
+          'inform from (account id), to (account id) and amount',
+        );
       }
 
       await this.transferUseCase.execute(input.body);

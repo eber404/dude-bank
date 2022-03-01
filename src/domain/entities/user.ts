@@ -25,6 +25,7 @@ export class User {
     this.password = new Password(props.password).password;
     this.account = props.account ?? new Account({
       balance: 1000,
+      userId: this.id,
     });
   }
 

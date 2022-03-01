@@ -8,14 +8,14 @@ import { AccountDTO } from 'infra/dtos/account-dto.ts';
 
 export class GetAccountRepositoryLocal implements GetAccountRepository {
   async getById(id: string): Promise<Account | null> {
-    const accountDto = await LocalStorage.getBy<AccountDTO>(
+    const accountDTO = await LocalStorage.getBy<AccountDTO>(
       Collection.ACCOUNTS,
       'id',
       id,
     );
 
-    if (!accountDto) return null;
+    if (!accountDTO) return null;
 
-    return AccountMapper.toDomain(accountDto);
+    return AccountMapper.toDomain(accountDTO);
   }
 }

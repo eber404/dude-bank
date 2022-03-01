@@ -1,6 +1,6 @@
 export interface MakeTransactionDTO {
   amount: number;
   description?: string;
-  fromAccountId: string;
-  toAccountId: string;
+  from: string;
+  to: string;
 }

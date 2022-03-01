@@ -32,18 +32,16 @@ export class TransferUseCase {
 
   async execute(input: MakeTransactionDTO) {
     const senderAccount = await this.getAccountRepository.getById(
-      input.fromAccountId,
+      input.from,
     );
 
     const receiverAccount = await this.getAccountRepository.getById(
-      input.toAccountId,
+      input.to,
     );
 
     if (!senderAccount?.isValid() || !receiverAccount?.isValid()) {
       return Notification.add({
-        message: `Account id ${
-          receiverAccount?.id ?? senderAccount?.id
-        } not found`,
+        message: `Account id ${input.from ?? input.to} not found`,
         type: NotificationType.ERROR,
       });
     }
@@ -51,16 +49,16 @@ export class TransferUseCase {
     const senderTransaction = new Transaction({
       amount: input.amount,
       description: input.description,
-      fromAccountId: senderAccount.id,
-      toAccountId: receiverAccount.id,
+      from: senderAccount.id,
+      to: receiverAccount.id,
       date: new Date(),
     });
 
     const receiverTransaction = new Transaction({
       amount: input.amount,
       description: input.description,
-      fromAccountId: senderAccount.id,
-      toAccountId: receiverAccount.id,
+      from: senderAccount.id,
+      to: receiverAccount.id,
       date: new Date(),
     });
 
